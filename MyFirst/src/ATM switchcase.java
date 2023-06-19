@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class ATMApp 
+public class ATM switchcase 
 {
 
     public static void main(String[] args)
