@@ -2,7 +2,7 @@ public class IMDBApp {
     public static void main(String[] args) {
         String actorName = "Tom Cruise";
         int yearOfBorn = 1962;
-        int age = 2020 - yearOfBorn;
+        int age = 2023 - yearOfBorn;
 
         String[] movieTitles = {
                 "The Last Samurai", "Minority Report", "Top Gun",
