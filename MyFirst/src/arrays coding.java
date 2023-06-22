@@ -7,8 +7,8 @@ public class MyClass {
      kaynak [3]=179;
      kaynak [4]=19876;
      
-     for(int no : kaynak){
-      System.out.println(no);   
+     for(int elementNumber : kaynak){
+      System.out.println(elementNumber);   
      }
        int[][] weeklyLotteryNumbers = {
                 {1, 2, 3, 4, 5},
