@@ -1,0 +1,43 @@
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import com.google.gson.Gson;
+@WebServlet("/payment")
+public class PaymentServlet extends HttpServlet {
+    private static final String VISA_API_KEY = "YOUR_VISA_API_KEY";
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Get the payment information from the request.
+        String amount = request.getParameter("amount");
+        String currency = request.getParameter("currency");
+        String cardNumber = request.getParameter("cardNumber");
+        String expirationDate = request.getParameter("expirationDate");
+        String cvv = request.getParameter("cvv");
+        // Create a map of payment information.
+        Map<String, String> paymentInfo = new HashMap<>();
+        paymentInfo.put("amount", amount);
+        paymentInfo.put("currency", currency);
+        paymentInfo.put("cardNumber", cardNumber);
+        paymentInfo.put("expirationDate", expirationDate);
+        paymentInfo.put("cvv", cvv);
+        // Make a request to the Visa API.
+        String responseBody = makeRequestToVisaApi(paymentInfo);
+        // Parse the response from the Visa API.
+        Map<String, String> responseData = new Gson().fromJson(responseBody, Map.class);
+        // Check the response status.
+        String status = responseData.get("status");
+        if (status.equals("APPROVED")) {
+            // The payment was successful.
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            // The payment was unsuccessful.
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+        // Write the response data to the response.
